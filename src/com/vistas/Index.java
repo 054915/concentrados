@@ -32,6 +32,7 @@ public class Index extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -70,6 +71,15 @@ public class Index extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jCheckBoxMenuItem1);
+
+        jCheckBoxMenuItem2.setSelected(true);
+        jCheckBoxMenuItem2.setText("Categorias");
+        jCheckBoxMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jCheckBoxMenuItem2);
 
         jMenuBar1.add(jMenu1);
 
@@ -120,6 +130,7 @@ public class Index extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
+<<<<<<< HEAD
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
         FrmInternoUsuarios obj = new FrmInternoUsuarios();
         this.jDesktopPane1.add(obj);
@@ -131,6 +142,14 @@ public class Index extends javax.swing.JFrame {
         this.jDesktopPane1.add(obj);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+=======
+    private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
+        FrmCategorias objFrmCategorias = new FrmCategorias();
+        
+        this.jDesktopPane1.add(objFrmCategorias);
+        objFrmCategorias.setVisible(true);
+    }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
+>>>>>>> 046a0789aa4fd4996ea8ed488274187f75c43ce9
 
     /**
      * @param args the command line arguments
@@ -169,6 +188,7 @@ public class Index extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
