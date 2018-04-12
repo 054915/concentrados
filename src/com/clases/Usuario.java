@@ -6,15 +6,17 @@ public class Usuario {
     private String user;
     private String pass;
     private int rol;
+    private Rol objRol;
 
     public Usuario() {
     }
 
-    public Usuario(int id_user, String user, String pass, int rol) {
+    public Usuario(int id_user, String user, String pass, int rol,Rol objRol) {
         this.id_user = id_user;
         this.user = user;
         this.pass = pass;
         this.rol = rol;
+        this.objRol = objRol;
     }
 
     public int getId_user() {
@@ -47,6 +49,14 @@ public class Usuario {
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+
+    public Rol getObjRol() {
+        return objRol;
+    }
+
+    public void setObjRol(Rol objRol) {
+        this.objRol = objRol;
     }
     
 }
