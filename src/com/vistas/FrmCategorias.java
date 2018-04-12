@@ -5,6 +5,13 @@
  */
 package com.vistas;
 
+import com.clases.Categoria;
+import com.dao.DaoCategoria;
+import static java.awt.Frame.ICONIFIED;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dev04
@@ -16,7 +23,86 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
      */
     public FrmCategorias() {
         initComponents();
+        tablaCategoria();
+
     }
+            
+            
+    
+    
+    Categoria objCat= new Categoria();
+    DaoCategoria objDaoCat = new DaoCategoria();
+    
+    
+    public void tablaCategoria(){
+        
+        //nombres de encabezados
+        String[] columnas={"Id Categoria", "Nombre"};
+        //array de objeto 2 de encabezados
+        Object[]obj=new Object[2];
+        //asignar encabezados
+        DefaultTableModel objTabla = new DefaultTableModel(null, columnas);
+        List lista;
+        
+        try {
+            lista = objDaoCat.mostrarCategoria();
+            
+            for (int i = 0; i < lista.size(); i++) {
+                objCat = (Categoria) lista.get(i);
+                obj[0] = objCat.getIdCategoria();
+                obj[1] = objCat.getNombre();
+                objTabla.addRow(obj);
+            }
+            this.jTable1.setModel(objTabla);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error tablaCategoria()" + e.toString());
+        }
+        
+    }    
+    public void llenarTabla(){        
+        int filas = this.jTable1.getSelectedRow();
+        this.txtNombre.setText(String.valueOf(this.jTable1.getValueAt(filas, 0)));        
+    }
+    public void limpiar(){
+        txtNombre.setText("");
+    }
+    
+    public void insertarCategoria() throws Exception{
+        objCat.setIdCategoria(ICONIFIED);
+        objCat.setNombre(this.txtNombre.getText());
+        
+        objDaoCat.insertarCategoria(objCat);        
+    }
+    public void modificarCategoria() throws Exception{
+        objCat.setNombre(this.txtNombre.getText());
+        
+        int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea modificar la categoria","Modificar categoria", JOptionPane.YES_NO_OPTION);
+        if (confirmacionModificar == 0) {
+            objDaoCat.modificarCategoria(objCat);
+            JOptionPane.showMessageDialog(rootPane, "Modificado con exito","  Confirmacion ", JOptionPane.INFORMATION_MESSAGE);
+        }
+        tablaCategoria();
+        limpiar();        
+    }
+    public void eliminarCategoria() throws Exception{
+        
+        objCat.setNombre(this.txtNombre.getText());
+        
+        int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea Eliminar la categoria","Eliminar categoria", JOptionPane.YES_NO_OPTION);
+        if (confirmacionModificar == 0) {
+            objDaoCat.modificarCategoria(objCat);
+            JOptionPane.showMessageDialog(rootPane, "Eliminado con exito","  Confirmacion ", JOptionPane.INFORMATION_MESSAGE);
+        }
+        tablaCategoria();
+        limpiar();        
+    }
+
+    
+    
+    
+    
+            
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,6 +113,14 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
@@ -34,15 +128,65 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         setTitle("Formulario Categorias");
         setToolTipText("");
 
+        jLabel1.setText("Nombre:");
+
+        btnAgregar.setText("Agregar");
+
+        btnModificar.setText("Modificar");
+
+        btnEliminar.setText("Eliminar");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(btnAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -50,5 +194,12 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
