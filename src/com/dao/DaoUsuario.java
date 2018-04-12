@@ -64,7 +64,6 @@ public class DaoUsuario extends Conexion{
         try {
             this.conectar();
             String sql="delete from usuario where id_usuario=?";
-<<<<<<< HEAD
             PreparedStatement ps = this.getCon().prepareStatement(sql);
            // ps.setInt();
         } catch (Exception e) {
@@ -85,11 +84,7 @@ public class DaoUsuario extends Conexion{
             if (res.next()) {   
                ingreso=true;
             }
-=======
-            PreparedStatement ps = this.getCon().prepareStatement(sql);            
-            ps.setInt(1, objUs.getId_user());
             
->>>>>>> e58a770ceec896dfc3f4224ad5ffcc5543a0620e
         } catch (Exception e) {
             throw e;
         }
