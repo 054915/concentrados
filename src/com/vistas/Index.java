@@ -130,7 +130,6 @@ public class Index extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
 
-<<<<<<< HEAD
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
         FrmInternoUsuarios obj = new FrmInternoUsuarios();
         this.jDesktopPane1.add(obj);
@@ -142,14 +141,13 @@ public class Index extends javax.swing.JFrame {
         this.jDesktopPane1.add(obj);
         obj.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-=======
+
     private void jCheckBoxMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem2ActionPerformed
         FrmCategorias objFrmCategorias = new FrmCategorias();
-        
         this.jDesktopPane1.add(objFrmCategorias);
         objFrmCategorias.setVisible(true);
     }//GEN-LAST:event_jCheckBoxMenuItem2ActionPerformed
->>>>>>> 046a0789aa4fd4996ea8ed488274187f75c43ce9
+
 
     /**
      * @param args the command line arguments
