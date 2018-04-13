@@ -48,7 +48,7 @@ public class DaoCategoria extends Conexion{
             ps.setInt(2, objCat.getIdCategoria());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error modificarCategoriaDAO " + e.toString());
         }finally{
             this.desconectar();
         }

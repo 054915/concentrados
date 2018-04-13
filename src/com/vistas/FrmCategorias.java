@@ -71,9 +71,14 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
     
     public void insertarCategoria() throws Exception{
         objCat.setNombre(this.txtNombre.getText());        
-        objDaoCat.insertarCategoria(objCat);        
+        objDaoCat.insertarCategoria(objCat);  
+        tablaCategoria();
+        limpiar(); 
     }
+    
     public void modificarCategoria() throws Exception{
+        int filas = this.jTable1.getSelectedRow();
+        objCat.setIdCategoria((int) this.jTable1.getValueAt(filas, 0));
         objCat.setNombre(this.txtNombre.getText());
         
         int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea modificar la categoria","Modificar categoria", JOptionPane.YES_NO_OPTION);
@@ -96,13 +101,6 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         tablaCategoria();
         limpiar();        
     }
-
-    
-    
-    
-    
-            
-            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -184,24 +182,26 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(btnAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)))
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(btnAgregar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(28, 28, 28)
@@ -209,9 +209,9 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
                     .addComponent(btnAgregar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,12 +229,9 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         
         try {
             modificarCategoria();
-            llenarTabla();
-            limpiar();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error modificarCategoria " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Error modificar Categoria boton " + ex.toString());
         }
-        limpiar();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -252,7 +249,6 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
             insertarCategoria();
-            llenarTabla();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error insertarCategoria " + ex.toString());
         }
