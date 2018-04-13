@@ -9,6 +9,8 @@ import com.clases.Categoria;
 import com.dao.DaoCategoria;
 import static java.awt.Frame.ICONIFIED;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -55,22 +57,20 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
             }
             this.jTable1.setModel(objTabla);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error tablaCategoria()" + e.toString());
+            JOptionPane.showMessageDialog(null, "Error tablaCategoria() " + e.toString());
         }
         
     }    
     public void llenarTabla(){        
         int filas = this.jTable1.getSelectedRow();
-        this.txtNombre.setText(String.valueOf(this.jTable1.getValueAt(filas, 0)));        
+        this.txtNombre.setText(String.valueOf(this.jTable1.getValueAt(filas, 1)));        
     }
     public void limpiar(){
         txtNombre.setText("");
     }
     
     public void insertarCategoria() throws Exception{
-        objCat.setIdCategoria(ICONIFIED);
-        objCat.setNombre(this.txtNombre.getText());
-        
+        objCat.setNombre(this.txtNombre.getText());        
         objDaoCat.insertarCategoria(objCat);        
     }
     public void modificarCategoria() throws Exception{
@@ -90,7 +90,7 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         
         int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea Eliminar la categoria","Eliminar categoria", JOptionPane.YES_NO_OPTION);
         if (confirmacionModificar == 0) {
-            objDaoCat.modificarCategoria(objCat);
+            objDaoCat.eliminarCategoria(objCat);
             JOptionPane.showMessageDialog(rootPane, "Eliminado con exito","  Confirmacion ", JOptionPane.INFORMATION_MESSAGE);
         }
         tablaCategoria();
@@ -131,10 +131,30 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         jLabel1.setText("Nombre:");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,6 +167,11 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -191,6 +216,48 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        llenarTabla();
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        
+        try {
+            modificarCategoria();
+            llenarTabla();
+            limpiar();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error modificarCategoria " + ex.toString());
+        }
+        limpiar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        
+        try {
+            eliminarCategoria();
+            limpiar();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error eliminarCategoria " + ex.toString());
+        }
+        limpiar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            insertarCategoria();
+            llenarTabla();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error insertarCategoria " + ex.toString());
+        }
+        limpiar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
