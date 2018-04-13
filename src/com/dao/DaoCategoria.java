@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
    
     
@@ -25,11 +26,9 @@ public class DaoCategoria extends Conexion{
         
         try {            
             this.conectar();
-            String sql ="INSERT INTO categoria VALUES (?,?)";
-            PreparedStatement ps= this.getCon().prepareStatement(sql);
-            
-            ps.setInt(1, objCat.getIdCategoria());
-            ps.setString(2, objCat.getNombre());
+            String sql ="INSERT INTO categoria(nombre)  VALUES (?)";
+            PreparedStatement ps= this.getCon().prepareStatement(sql);            
+            ps.setString(1, objCat.getNombre());
             ps.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -49,7 +48,7 @@ public class DaoCategoria extends Conexion{
             ps.setInt(2, objCat.getIdCategoria());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error modificarCategoriaDAO " + e.toString());
         }finally{
             this.desconectar();
         }
@@ -84,12 +83,12 @@ public class DaoCategoria extends Conexion{
             
             while (rs.next()) {                
                 Categoria objCat=new Categoria();
-                objCat.setIdCategoria(rs.getInt(objCat.getIdCategoria()));
-                objCat.setNombre(rs.getString(objCat.getNombre()));
+                objCat.setIdCategoria(rs.getInt("id_categoria"));
+                objCat.setNombre(rs.getString("nombre"));
                 listaCategoria.add(objCat);
             }            
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error DaoMostrar() " + e.toString());
         } finally{
             this.desconectar();
         }
