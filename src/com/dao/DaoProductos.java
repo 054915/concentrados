@@ -5,10 +5,26 @@
  */
 package com.dao;
 
+import com.clases.Producto;
+import com.conexion.Conexion;
+
 /**
  *
  * @author Daniel
  */
-public class DaoProductos {
+public class DaoProductos extends Conexion{
+    
+    public void insertarProducto (Producto objPro){
+        
+        try {
+            this.conectar();
+            String sql="insert into producto()";
+            
+        } catch (Exception e) {
+        }
+        
+        
+    }
+    
     
 }
