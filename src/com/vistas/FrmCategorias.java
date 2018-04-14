@@ -90,7 +90,8 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         limpiar();        
     }
     public void eliminarCategoria() throws Exception{
-        
+        int filas = this.jTable1.getSelectedRow();
+        objCat.setIdCategoria((int) this.jTable1.getValueAt(filas, 0));
         objCat.setNombre(this.txtNombre.getText());
         
         int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea Eliminar la categoria","Eliminar categoria", JOptionPane.YES_NO_OPTION);

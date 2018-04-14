@@ -28,7 +28,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     DaoUsuario objDao = new DaoUsuario();
     DaoRol objDaoRol = new DaoRol();
     List<Rol> listComboRol;
-    public FrmInternoUsuarios() throws Exception {
+    public FrmInternoUsuarios() {
         initComponents();
         tablaDep();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -41,7 +41,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             }
             this.cbbRol.setModel(model);
         } catch (Exception e) {
-           throw e;
+           JOptionPane.showInputDialog(ERROR);
         }
     }
     
