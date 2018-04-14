@@ -5,6 +5,16 @@
  */
 package com.vistas;
 
+import com.clases.Rol;
+import com.clases.Usuario;
+import com.dao.DaoRol;
+import com.dao.DaoUsuario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Daniel
@@ -14,10 +24,49 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     /**
      * Creates new form Usuarios
      */
-    public FrmInternoUsuarios() {
+    Usuario objUsu = new Usuario();
+    DaoUsuario objDao = new DaoUsuario();
+    DaoRol objDaoRol = new DaoRol();
+    List<Rol> listComboRol;
+    public FrmInternoUsuarios() throws Exception {
         initComponents();
+        tablaDep();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        listComboRol = new ArrayList<>();
+        try {
+            for (Object object : objDaoRol.mostrarRol()) {
+                Rol roles = (Rol) object;
+                listComboRol.add(roles);
+                model.addElement(roles.getNombre());
+            }
+            this.cbbRol.setModel(model);
+        } catch (Exception e) {
+           throw e;
+        }
     }
-
+    
+    
+    
+    
+    public void tablaDep(){
+        String [] columnas = {"Usuario","Contraseña"};
+        Object[] obj = new Object[3];
+        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+        List ls;
+        try {
+            ls=objDao.mostrarUsuario();
+            for (int i = 0; i < ls.size(); i++) {
+                objUsu = (Usuario)ls.get(i);
+                obj[0]=objUsu.getUser();
+                obj[1]=objUsu.getPass();
+                obj[2]=objUsu.getObjRol().getNombre();
+                tabla.addRow(obj);
+            }
+            this.tblUsuarios.setModel(tabla);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al mostrar datos " + e.toString());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,12 +81,12 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtcontra = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbRol = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        btnagregar = new javax.swing.JButton();
-        btnmodificar = new javax.swing.JButton();
-        btneliminar = new javax.swing.JButton();
+        tblUsuarios = new javax.swing.JTable();
+        btnAgregar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -51,9 +100,9 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Rol:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,13 +113,13 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblUsuarios);
 
-        btnagregar.setText("Agregar");
+        btnAgregar.setText("Agregar");
 
-        btnmodificar.setText("Modificar");
+        btnModificar.setText("Modificar");
 
-        btneliminar.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,13 +142,13 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnmodificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btneliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnagregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -118,13 +167,13 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnagregar)
+                        .addComponent(btnAgregar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnmodificar)
+                        .addComponent(btnModificar)
                         .addGap(18, 18, 18)
-                        .addComponent(btneliminar)))
+                        .addComponent(btnEliminar)))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
@@ -135,15 +184,15 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnagregar;
-    private javax.swing.JButton btneliminar;
-    private javax.swing.JButton btnmodificar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> cbbRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblUsuarios;
     private javax.swing.JPasswordField txtcontra;
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables

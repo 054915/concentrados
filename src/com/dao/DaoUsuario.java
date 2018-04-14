@@ -42,7 +42,7 @@ public class DaoUsuario extends Conexion{
     public void modificarUsario(Usuario objUs) throws Exception{
         try {
             this.conectar();
-            String sql="update usuario set usuario=?,contrasenia=?,id_rol=? where id_usuario=?";
+            String sql="update usuario set usuario=?,contrasenia=?,id_rol=? where usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             
             ps.setString(1, objUs.getUser());
@@ -63,7 +63,7 @@ public class DaoUsuario extends Conexion{
         
         try {
             this.conectar();
-            String sql="delete from usuario where id_usuario=?";
+            String sql="delete from usuario where usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
            // ps.setInt();
         } catch (Exception e) {
@@ -104,13 +104,40 @@ public class DaoUsuario extends Conexion{
             pst.setString(1, objUsu.getUser());
             pst.setString(2, objUsu.getPass());
             res=pst.executeQuery();
-            if (res.next()) {   
+            while (res.next()) {   
                Usuario obj=new Usuario();
                obj.setId_user(res.getInt("id_usuario"));
                obj.setUser(res.getString("usuario"));
                obj.setPass(res.getString("contrasenia"));
                obj.setRol(res.getInt("id_rol"));
                listaUsuarios.add(obj);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        finally{
+            this.desconectar();
+        }
+        return listaUsuarios;
+    }
+    public List mostrarUsuario() throws Exception{
+        List listaUsuarios = new ArrayList();
+        ResultSet res;
+        try {
+            this.conectar();
+            String sql="select usuario.usuario, usuario.contrasenia, rol.id_rol, rol.nombre from usuario inner join rol on usuario.id_rol = rol.id_rol";
+            PreparedStatement pst = this.getCon().prepareCall(sql);
+            res=pst.executeQuery();
+            while (res.next()) {
+                Rol objRol = new Rol();
+                objRol.setIdRol(res.getInt("id_rol"));
+                objRol.setNombre(res.getString("nombre"));
+                Usuario obj=new Usuario();
+                obj.setUser(res.getString("usuario"));
+                obj.setPass(res.getString("contrasenia"));
+                obj.setRol(res.getInt("id_rol"));
+                obj.setObjRol(objRol);
+                listaUsuarios.add(obj);
             }
         } catch (Exception e) {
             throw e;
