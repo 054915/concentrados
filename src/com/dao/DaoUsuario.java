@@ -25,12 +25,10 @@ public class DaoUsuario extends Conexion{
             this.conectar();
             String sql="insert into usuario(usuario,contrasenia,id_rol) values(?,?,?)";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            
             ps.setString(1, objUs.getUser());
             ps.setString(2, objUs.getPass());
             ps.setInt(3, objUs.getRol());
             ps.executeUpdate();
-            
         } catch (Exception e) {
             throw e;
         }
@@ -42,15 +40,13 @@ public class DaoUsuario extends Conexion{
     public void modificarUsario(Usuario objUs) throws Exception{
         try {
             this.conectar();
-            String sql="update usuario set usuario=?,contrasenia=?,id_rol=? where usuario=?";
+            String sql="update usuario set usuario=?, contrasenia=?, id_rol=? where usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            
             ps.setString(1, objUs.getUser());
             ps.setString(2, objUs.getPass());
             ps.setInt(3, objUs.getRol());
-            ps.setInt(4, objUs.getId_user());
+            ps.setString(4, objUs.getUser());
             ps.executeUpdate();
-            
         } catch (Exception e) {
             throw e;
         }
@@ -59,15 +55,18 @@ public class DaoUsuario extends Conexion{
         }
     }
     
-    public void eliminarUsuario(Usuario objUs){
-        
+    public void eliminarUsuario(Usuario objUs) throws Exception{
         try {
             this.conectar();
             String sql="delete from usuario where usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-           // ps.setInt();
+            ps.setString(1, objUs.getUser());
+            ps.executeUpdate();
         } catch (Exception e) {
-            
+            throw e;
+        }
+        finally{
+            this.desconectar();
         }
     }
     
@@ -147,12 +146,17 @@ public class DaoUsuario extends Conexion{
         }
         return listaUsuarios;
     }
-    /*public static void main(String[] args) throws Exception{
+    /*public static void main(String[] args){
         Usuario obj1 = new Usuario();
         DaoUsuario obj2 = new DaoUsuario();
-        obj1.setUser("Josue");
-        obj1.setPass("123456");
-        boolean resul= obj2.login(obj1);
-        JOptionPane.showMessageDialog(null, resul);
+        Rol objRol=new Rol();
+        objRol.setIdRol(1);
+        obj1.setUser("Daniel");
+        obj1.setPass("26587");
+        obj1.setRol(1);
+        try {
+            obj2.modificarUsario(obj1);
+        } catch (Exception e) {
+        }
     }*/
 }

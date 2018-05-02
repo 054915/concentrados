@@ -11,6 +11,8 @@ import com.dao.DaoRol;
 import com.dao.DaoUsuario;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -37,16 +39,50 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             for (Object object : objDaoRol.mostrarRol()) {
                 Rol roles = (Rol) object;
                 listComboRol.add(roles);
-                model.addElement(roles.getNombre());
+                model.addElement(roles.getIdRol()+" "+roles.getNombre());
+                
             }
             this.cbbRol.setModel(model);
         } catch (Exception e) {
-           JOptionPane.showInputDialog(ERROR);
+           //JOptionPane.showInputDialog(ERROR);
         }
     }
     
+    public void recuperarDatos(){
+        objUsu.setUser(this.txtusuario.getText());
+        objUsu.setPass(this.txtcontra.getText());
+        objUsu.setRol(1+this.cbbRol.getSelectedIndex());
+        System.out.println(this.cbbRol.getSelectedIndex());
+    }
     
+    public void insertar() throws Exception{
+        recuperarDatos();
+        objDao.insertarUsuario(objUsu);
+    }
     
+    public void modificar() throws Exception{
+        recuperarDatos();
+        int mensa = JOptionPane.showConfirmDialog(null, "Desea modificar");
+        if (mensa==0) {
+            objDao.modificarUsario(objUsu);
+        }
+    }
+    
+    public void eliminar() throws Exception{
+        recuperarDatos();
+        int mensa = JOptionPane.showConfirmDialog(null, "Desea eliminar");
+        if (mensa==0) {
+            objDao.eliminarUsuario(objUsu);
+        }else{
+            limpiar();
+        }
+    }
+    
+    public void limpiar(){
+        this.txtusuario.setText("");
+        this.txtcontra.setText("");
+        this.cbbRol.setSelectedIndex(1);
+    }
     
     public void tablaDep(){
         String [] columnas = {"Usuario","Contraseña"};
@@ -61,11 +97,22 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                 obj[1]=objUsu.getPass();
                 obj[2]=objUsu.getObjRol().getNombre();
                 tabla.addRow(obj);
+                
             }
             this.tblUsuarios.setModel(tabla);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al mostrar datos " + e.toString());
         }
+    }
+    
+    public void tocarTabla(){
+        int fila;
+        
+        /*procedimiento*/
+        fila = this.tblUsuarios.getSelectedRow();
+        this.txtusuario.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 0)));
+        this.txtcontra.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 1)));
+        this.cbbRol.setSelectedItem("Empleado");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,13 +160,33 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,11 +243,42 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar)))
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            insertar();
+            tablaDep();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmInternoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        tocarTabla();
+    }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            modificar();
+            tablaDep();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmInternoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            eliminar();
+            tablaDep();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmInternoUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

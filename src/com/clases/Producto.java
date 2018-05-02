@@ -11,18 +11,18 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private double precio;
-    private Categoria idCategoria;
+    private Categoria categoria;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, int cod_producto, String nombre, String descripcion, double precio, Categoria idCategoria) {
+    public Producto(int idProducto, int cod_producto, String nombre, String descripcion, double precio, Categoria categoria) {
         this.idProducto = idProducto;
         this.cod_producto = cod_producto;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.idCategoria = idCategoria;
+        this.categoria = categoria;
     }
 
     public int getIdProducto() {
@@ -65,12 +65,12 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Categoria getIdCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setIdCategoria(Categoria idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }      
     
 }
