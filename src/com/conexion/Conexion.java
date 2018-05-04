@@ -21,7 +21,7 @@ public class Conexion {
     public void conectar() throws Exception{
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/concentrados?user=root&password=");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/concentrados1?user=root&password=");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "error al conectar");
         }
