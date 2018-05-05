@@ -179,16 +179,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnModificar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Modificar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
       <AuxValues>
@@ -208,6 +217,9 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblProductosMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

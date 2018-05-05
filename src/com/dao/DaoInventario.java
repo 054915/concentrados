@@ -6,9 +6,8 @@
 package com.dao;
 
 import com.clases.Categoria;
-import com.clases.Producto;
-import com.clases.Proveedor;
 import com.conexion.Conexion;
+import com.clases.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -16,21 +15,17 @@ import java.util.List;
 
 /**
  *
- * @author Daniel
+ * @author DEVELOPER-4
  */
-public class DaoProductos extends Conexion{
+public class DaoInventario extends Conexion{
     
-    public void insertarProducto (Producto objPro) throws Exception{
+    public void insertarInventario (Inventario objInv) throws Exception{
         try {
             this.conectar();
-            String sql="INSERT INTO producto VALUES (NULL,?,?,?,?,?,?)";
+            String sql="INSERT INTO inventario VALUES (NULL,?,?);";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setInt(1, objPro.getCod_producto());
-            ps.setString(2, objPro.getNombre());
-            ps.setString(3, objPro.getDescripcion());
-            ps.setDouble(4, objPro.getPrecio());
-            ps.setInt(5, objPro.getCategoria().getIdCategoria());
-            ps.setInt(6, objPro.getProveedor().getIdProveedor());
+            ps.setInt(1, objInv.getProducto().getCod_producto());
+            ps.setInt(2, objInv.getCantidadStock());
             ps.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -40,18 +35,14 @@ public class DaoProductos extends Conexion{
         }
     }
     
-    public void modificarProducto (Producto objPro) throws Exception{
+    public void modificarInventario (Inventario objInv) throws Exception{
         try {
             this.conectar();
-            String sql="UPDATE producto SET cod_producto=?, nombre=?, descripcion=?, precio=?, id_categoria=?, id_proveedor=? WHERE id_producto=?";
+            String sql="UPDATE inventario SET id_producto=?, cantidad_stock=? WHERE id_inventario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setInt(1, objPro.getCod_producto());
-            ps.setString(2, objPro.getNombre());
-            ps.setString(3, objPro.getDescripcion());
-            ps.setDouble(4, objPro.getPrecio());
-            ps.setInt(5, objPro.getCategoria().getIdCategoria());
-            ps.setInt(6, objPro.getProveedor().getIdProveedor());
-            ps.setInt(7, objPro.getIdProducto());
+            ps.setInt(1, objInv.getProducto().getCod_producto());
+            ps.setInt(2, objInv.getCantidadStock());
+            ps.setInt(3, objInv.getIdInventario());
             ps.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -61,12 +52,12 @@ public class DaoProductos extends Conexion{
         }
     }
     
-    public void eliminarProducto (Producto objPro) throws Exception{
+    public void eliminarInventario (Inventario objInv) throws Exception{
         try {
             this.conectar();
-            String sql="DELETE FROM producto WHERE id_producto=?";
+            String sql="DELETE FROM inventario WHERE id_inventario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setInt(1, objPro.getIdProducto());
+            ps.setInt(1, objInv.getIdInventario());
             ps.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -76,18 +67,20 @@ public class DaoProductos extends Conexion{
         }
     }
     
-    public List mostrarProducto() throws Exception{
-        List listaProductos = new ArrayList();
+    public List mostrarInventario() throws Exception{
+        List listaInventario = new ArrayList();
         ResultSet res;
         try {
             this.conectar();//SELECT inv.id_inventario, pro.id_producto, pro.cod_producto, pro.nombre as nombreProducto, pro.descripcion, pro.precio, pro.id_categoria, cat.nombre as nombreCategoria, pro.id_proveedor, prov.nombre AS nombreProveedor, inv.cantidad_stock FROM inventario inv, producto pro, proveedor prov, categoria cat WHERE inv.id_producto=pro.id_producto AND pro.id_categoria=cat.id_categoria AND pro.id_proveedor=prov.id_proveedor
-            String sql="SELECT pro.id_producto, pro.cod_producto, pro.nombre as nombreProducto, pro.descripcion, pro.precio, pro.id_categoria, cat.nombre as nombreCategoria, pro.id_proveedor, prov.nombre AS nombreProveedor FROM producto pro, proveedor prov, categoria cat WHERE pro.id_categoria=cat.id_categoria AND pro.id_proveedor=prov.id_proveedor";
+            String sql="SELECT inv.id_inventario, pro.id_producto, pro.cod_producto, pro.nombre as nombreProducto, pro.descripcion, pro.precio, pro.id_categoria, cat.nombre as nombreCategoria, pro.id_proveedor, prov.nombre AS nombreProveedor, inv.cantidad_stock FROM inventario inv, producto pro, proveedor prov, categoria cat WHERE inv.id_producto=pro.id_producto AND pro.id_categoria=cat.id_categoria AND pro.id_proveedor=prov.id_proveedor";
             PreparedStatement pst = this.getCon().prepareCall(sql);
             res=pst.executeQuery();
             while (res.next()) {
+                Inventario objInv = new Inventario();
                 Producto objPro = new Producto();
                 Categoria objCat=new Categoria();
                 Proveedor objProv=new Proveedor();
+                objInv.setIdInventario(res.getInt("id_inventario"));
                 objPro.setIdProducto(res.getInt("id_producto"));
                 objPro.setCod_producto(res.getInt("cod_producto"));
                 objPro.setNombre(res.getString("nombreProducto"));
@@ -99,7 +92,9 @@ public class DaoProductos extends Conexion{
                 objProv.setIdProveedor(res.getInt("id_proveedor"));
                 objProv.setNombre(res.getString("nombreProveedor"));
                 objPro.setProveedor(objProv);
-                listaProductos.add(objPro);
+                objInv.setProducto(objPro);
+                objInv.setCantidadStock(res.getInt("cantidad_stock"));
+                listaInventario.add(objInv);
             }
         } catch (Exception e) {
             throw e;
@@ -107,6 +102,6 @@ public class DaoProductos extends Conexion{
         finally{
             this.desconectar();
         }
-        return listaProductos;
+        return listaInventario;
     }
 }

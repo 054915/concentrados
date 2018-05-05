@@ -29,8 +29,11 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     DaoProductos objDaoPro = new DaoProductos();
     DaoCategoria objDaoCat = new DaoCategoria();
     DaoProveedor objDaoProv = new DaoProveedor();
+    Categoria objCatTemp = new Categoria();
+    Proveedor objProTemp = new Proveedor();
     List<Categoria> listComboCate;
     List<Proveedor> listComboProv;
+    int txtIdProductos;
     
     public FrmProductos() {
         initComponents();
@@ -89,6 +92,70 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al mostrar datos " + e.toString());
         }
     }
+    
+    public void tocarTabla(){
+        int fila;
+        /*procedimiento*/
+        fila = this.tblProductos.getSelectedRow();
+        this.txtIdProductos=Integer.parseInt(String.valueOf(this.tblProductos.getValueAt(fila, 0)));
+        this.txtCodProducto.setText(String.valueOf(this.tblProductos.getValueAt(fila, 1)));
+        this.txtNombre.setText(String.valueOf(this.tblProductos.getValueAt(fila, 2)));
+        this.txtDescripcion.setText(String.valueOf(this.tblProductos.getValueAt(fila, 3)));
+        this.txtPrecio.setText(String.valueOf(this.tblProductos.getValueAt(fila, 4)));
+        this.cbbCategoria.setSelectedItem(this.tblProductos.getValueAt(fila, 5));
+        this.cbbProveedor.setSelectedItem(this.tblProductos.getValueAt(fila, 6));
+    }
+    
+    public void recuperarDatos(){
+        objPro.setIdProducto(this.txtIdProductos);
+        objPro.setCod_producto(Integer.parseInt(this.txtCodProducto.getText()));
+        objPro.setNombre(this.txtNombre.getText());
+        objPro.setDescripcion(this.txtDescripcion.getText());
+        objPro.setPrecio(Double.parseDouble(this.txtPrecio.getText()));
+        
+        int categoria = (1+this.cbbCategoria.getSelectedIndex());
+        objCatTemp.setIdCategoria(categoria);
+        objPro.setCategoria(objCatTemp);
+        
+        int proveedor = (1+this.cbbProveedor.getSelectedIndex());
+        objProTemp.setIdProveedor(proveedor);
+        objPro.setProveedor(objProTemp);
+    }
+    
+    public void insertar() throws Exception{
+        recuperarDatos();
+        objDaoPro.insertarProducto(objPro);
+    }
+    
+    public void modificar() throws Exception{
+        recuperarDatos();
+        int mensa = JOptionPane.showConfirmDialog(null, "Desea modificar");
+        if (mensa==0) {
+            objDaoPro.modificarProducto(objPro);
+        }else{
+            limpiar();
+        }
+    }
+    
+    public void eliminar() throws Exception{
+        recuperarDatos();
+        int mensa = JOptionPane.showConfirmDialog(null, "Desea eliminar");
+        if (mensa==0) {
+            objDaoPro.eliminarProducto(objPro);
+        }else{
+            limpiar();
+        }
+    }
+    
+    public void limpiar(){
+        this.txtIdProductos=0;
+        this.txtCodProducto.setText("");
+        this.txtNombre.setText("");
+        this.txtDescripcion.setText("");
+        this.txtPrecio.setText("");
+        this.cbbCategoria.setSelectedIndex(1);
+        this.cbbProveedor.setSelectedIndex(1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,10 +209,25 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(txtDescripcion);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,6 +240,11 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblProductos);
 
         jLabel5.setText("Categoria");
@@ -254,6 +341,37 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     private void txtCodProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodProductoActionPerformed
+
+    private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+        tocarTabla();
+    }//GEN-LAST:event_tblProductosMouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        try {
+            insertar();
+            tablaDep();
+            limpiar();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        try {
+            modificar();
+            tablaDep();
+            limpiar();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+            eliminar();
+            tablaDep();
+            limpiar();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
