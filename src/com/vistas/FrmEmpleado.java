@@ -32,12 +32,13 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         List<Usuario> listUsuarios;
         
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+        
         listUsuarios = new ArrayList<>();
         try {
             for (Object object : daoU.mostrarUsuario()) {
                 Usuario user = (Usuario) object;
-                listUsuarios.add(user);
-                model.addElement(user.getUser());                
+                //model.addElement(user.getUser());
+                model.addElement(user.getId_user()+", "+user.getUser());
             }
             this.idUsuario.setModel(model);
         } catch (Exception e) {
@@ -92,6 +93,8 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         txtDirec.setText("");
         txtTel.setText("");  
     }
+    
+    
     
     public void insertar(){
         try {

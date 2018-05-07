@@ -33,7 +33,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     Proveedor objProTemp = new Proveedor();
     List<Categoria> listComboCate;
     List<Proveedor> listComboProv;
-    int txtIdProductos;
+    int txtIdProductos=0;
     
     public FrmProductos() {
         initComponents();
@@ -48,7 +48,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             for (Object object : objDaoCat.mostrarCategoria()) {
                 Categoria cate = (Categoria) object;
                 listComboCate.add(cate);
-                model.addElement(cate.getNombre());
+                model.addElement(cate.getIdCategoria()+", "+cate.getNombre());
             }
             this.cbbCategoria.setModel(model);
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             for (Object object : objDaoProv.mostrarProveedor()) {
                 Proveedor prov = (Proveedor) object;
                 listComboProv.add(prov);
-                modelProveedor.addElement(prov.getNombre());
+                modelProveedor.addElement(prov.getIdProveedor()+", "+prov.getNombre());
             }
             this.cbbProveedor.setModel(modelProveedor);
         } catch (Exception e) {
@@ -113,12 +113,16 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         objPro.setDescripcion(this.txtDescripcion.getText());
         objPro.setPrecio(Double.parseDouble(this.txtPrecio.getText()));
         
-        int categoria = (1+this.cbbCategoria.getSelectedIndex());
-        objCatTemp.setIdCategoria(categoria);
+        String cate=(String)this.cbbCategoria.getSelectedItem();
+        String[] categ = cate.split(",");
+        
+        objCatTemp.setIdCategoria(Integer.parseInt(categ[0]));
         objPro.setCategoria(objCatTemp);
         
-        int proveedor = (1+this.cbbProveedor.getSelectedIndex());
-        objProTemp.setIdProveedor(proveedor);
+        String prove=(String)this.cbbProveedor.getSelectedItem();
+        String[] proved = cate.split(",");
+        
+        objProTemp.setIdProveedor(Integer.parseInt(proved[0]));
         objPro.setProveedor(objProTemp);
     }
     
@@ -132,6 +136,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         int mensa = JOptionPane.showConfirmDialog(null, "Desea modificar");
         if (mensa==0) {
             objDaoPro.modificarProducto(objPro);
+            limpiar();
         }else{
             limpiar();
         }
@@ -142,6 +147,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         int mensa = JOptionPane.showConfirmDialog(null, "Desea eliminar");
         if (mensa==0) {
             objDaoPro.eliminarProducto(objPro);
+            limpiar();
         }else{
             limpiar();
         }
@@ -153,8 +159,8 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         this.txtNombre.setText("");
         this.txtDescripcion.setText("");
         this.txtPrecio.setText("");
-        this.cbbCategoria.setSelectedIndex(1);
-        this.cbbProveedor.setSelectedIndex(1);
+        this.cbbCategoria.setSelectedIndex(0);
+        this.cbbProveedor.setSelectedIndex(0);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -280,9 +286,10 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(cbbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -305,7 +312,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92))
                     .addGroup(layout.createSequentialGroup()
