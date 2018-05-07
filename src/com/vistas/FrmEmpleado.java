@@ -7,6 +7,7 @@ package com.vistas;
 
 import com.clases.*;
 import com.dao.*;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,8 +38,13 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         try {
             for (Object object : daoU.mostrarUsuario()) {
                 Usuario user = (Usuario) object;
+<<<<<<< HEAD
                 //model.addElement(user.getUser());
                 model.addElement(user.getId_user()+", "+user.getUser());
+=======
+                listUsuarios.add(user);
+                model.addElement(user.getId_user()+", "+user.getUser());                
+>>>>>>> fb1ca47b6e35fc6a192724493eb0a1968223ea96
             }
             this.idUsuario.setModel(model);
         } catch (Exception e) {
@@ -48,7 +54,9 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     }
 
     Empleado emp = new Empleado();
+    Usuario u = new Usuario();
     DaoEmpleado daoEmp = new DaoEmpleado();
+    int id_empleado=0;
     
     public void tablaEmpleado(){       
         String[] columnas={"Id Empleado","Codigo Empleado","Nombre", "Apellido", "Direccion","Telefono", "Id usuario"};
@@ -79,11 +87,13 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     public void llenarTablaEmpleado(){
         int filas = this.jTable1.getSelectedRow();
         
+        this.id_empleado = Integer.parseInt(String.valueOf(this.jTable1.getValueAt(filas, 0)));
         this.txtCodigoEmpleado.setText(String.valueOf(this.jTable1.getValueAt(filas, 1)));
         this.txtNombre.setText(String.valueOf(this.jTable1.getValueAt(filas, 2)));
         this.txtApellido.setText(String.valueOf(this.jTable1.getValueAt(filas, 3)));
         this.txtDirec.setText(String.valueOf(this.jTable1.getValueAt(filas, 4)));
-        this.txtTel.setText(String.valueOf(this.jTable1.getValueAt(filas, 5)));        
+        this.txtTel.setText(String.valueOf(this.jTable1.getValueAt(filas, 5)));
+        
     }
     
     public void limpiarDatoEmp(){
@@ -97,26 +107,58 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     
     
     public void insertar(){
+        Usuario p = new Usuario();
+        
+        emp.setCodigoEmpleado(Integer.parseInt(this.txtCodigoEmpleado.getText()));
+        emp.setNombreEmpleado(this.txtNombre.getText());
+        emp.setApellidoEmpleado(this.txtApellido.getText());
+        emp.setDireccionEmpleado(this.txtDirec.getText());
+        emp.setTelefonoEmpleado(this.txtTel.getText());
+        p.setId_user(1+this.idUsuario.getSelectedIndex());
+        emp.setUsuario(p);
         try {
             daoEmp.insertarEmpleado(emp);
             tablaEmpleado();
+            limpiarDatoEmp();
         } catch (Exception ex) {
-            
+            Logger.getLogger(FrmEmpleado.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public void modificar(){
-        try {
-            daoEmp.modificarEmpleado(emp);
-            tablaEmpleado();
-        } catch (Exception e) {
-        }
+        
     }
     
-    public void eliminar(){
-        try {
+    public void modificar() throws Exception{      
+                
+        emp.setIdEmpleado(id_empleado);
+        emp.setCodigoEmpleado(Integer.parseInt(this.txtCodigoEmpleado.getText()));
+        emp.setNombreEmpleado(this.txtNombre.getText());
+        emp.setApellidoEmpleado(this.txtApellido.getText());
+        emp.setDireccionEmpleado(this.txtDirec.getText());
+        emp.setTelefonoEmpleado(this.txtTel.getText());
+        String id_user = (String) this.idUsuario.getSelectedItem();
+        String[] id_users = id_user.split(",");
+        u.setId_user(Integer.parseInt(id_users[0]));
+        emp.setUsuario(u);
+        
+        int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea modificar la Empleado","Modificar Empleado", JOptionPane.YES_NO_OPTION);
+        if (confirmacionModificar == 0) {
+            daoEmp.modificarEmpleado(emp);
+            tablaEmpleado();
+            limpiarDatoEmp();
+            JOptionPane.showMessageDialog(rootPane, "Modificado con éxito","  Confirmacion ", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    }
+    
+    public void eliminar() throws Exception{
+        
+        emp.setIdEmpleado(id_empleado);
+        
+        int confirmacionModificar = JOptionPane.showConfirmDialog(this, "Desea eliminar la Empleado","Modificar Empleado", JOptionPane.YES_NO_OPTION);
+        if (confirmacionModificar == 0) {
             daoEmp.eliminarEmpleado(emp);
             tablaEmpleado();
-        } catch (Exception e) {
+            limpiarDatoEmp();
+            JOptionPane.showMessageDialog(rootPane, "Eliminado con éxito","  Confirmacion ", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -301,17 +343,23 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
         insertar();
-        tablaEmpleado();
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        modificar();
-        tablaEmpleado();
+        try {
+            modificar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminar();
-        tablaEmpleado();
+        try {
+            eliminar();
+        } catch (Exception ex) {
+            Logger.getLogger(FrmEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
