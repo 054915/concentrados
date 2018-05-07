@@ -3,17 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProveedor.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/Index.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoUsuario.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/conexion/Conexion.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmCategorias.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoProveedor.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProductos.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmInternoUsuarios.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoRol.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Producto.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmInicio.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Categoria.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Proveedor.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoProductos.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Inventario.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoInventario.java</file>
         </group>
     </open-files>
 </project-private>
