@@ -39,6 +39,7 @@ public class Index extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
 
         jMenu4.setText("File");
         jMenuBar2.add(jMenu4);
@@ -123,6 +124,14 @@ public class Index extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
+        jMenu1.setText("Empleados");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -180,6 +189,12 @@ public class Index extends javax.swing.JFrame {
         objFrmProductos.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+        FrmEmpleado objFrmEmp = new FrmEmpleado();        
+        this.jDesktopPane1.add(objFrmEmp);
+        objFrmEmp.setVisible(true);
+    }//GEN-LAST:event_jMenu1MouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -218,6 +233,7 @@ public class Index extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;

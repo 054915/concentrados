@@ -61,7 +61,7 @@ public class FrmCategorias extends javax.swing.JInternalFrame {
         }
         
     }    
-    public void llenarTabla(){        
+    public void llenarTabla(){
         int filas = this.jTable1.getSelectedRow();
         this.txtNombre.setText(String.valueOf(this.jTable1.getValueAt(filas, 1)));        
     }
