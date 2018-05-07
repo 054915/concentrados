@@ -3,23 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProveedor.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/Index.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoProveedor.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProductos.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmInternoUsuarios.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Producto.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Proveedor.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoProductos.java</file>
-            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Inventario.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoInventario.java</file>
-=======
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/concentrados/src/com/dao/DaoEmpleado.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/concentrados/src/com/dao/DaoCategoria.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/concentrados/src/com/vistas/FrmInternoUsuarios.java</file>
-            <file>file:/C:/Users/Daniel/Documents/NetBeansProjects/concentrados/src/com/vistas/FrmEmpleado.java</file>
->>>>>>> 62730865245afe57d261bbd33206b0d29ce1286e
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoUsuario.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/conexion/Conexion.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmEmpleado.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProductos.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Inventario.java</file>
         </group>
     </open-files>
 </project-private>

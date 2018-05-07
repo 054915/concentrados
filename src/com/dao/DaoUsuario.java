@@ -124,11 +124,7 @@ public class DaoUsuario extends Conexion{
         ResultSet res;
         try {
             this.conectar();
-<<<<<<< HEAD
             String sql="select usuario.id_usuario ,usuario.usuario, usuario.contrasenia, rol.id_rol, rol.nombre from usuario inner join rol on usuario.id_rol = rol.id_rol";
-=======
-            String sql="select usuario.id_usuario, usuario.usuario, usuario.contrasenia, rol.id_rol, rol.nombre from usuario inner join rol on usuario.id_rol = rol.id_rol";
->>>>>>> fb1ca47b6e35fc6a192724493eb0a1968223ea96
             PreparedStatement pst = this.getCon().prepareCall(sql);
             res=pst.executeQuery();
             while (res.next()) {

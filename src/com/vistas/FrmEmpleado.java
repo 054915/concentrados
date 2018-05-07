@@ -38,13 +38,9 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         try {
             for (Object object : daoU.mostrarUsuario()) {
                 Usuario user = (Usuario) object;
-<<<<<<< HEAD
-                //model.addElement(user.getUser());
-                model.addElement(user.getId_user()+", "+user.getUser());
-=======
                 listUsuarios.add(user);
-                model.addElement(user.getId_user()+", "+user.getUser());                
->>>>>>> fb1ca47b6e35fc6a192724493eb0a1968223ea96
+                model.addElement(user.getId_user()+", "+user.getUser());
+                
             }
             this.idUsuario.setModel(model);
         } catch (Exception e) {
