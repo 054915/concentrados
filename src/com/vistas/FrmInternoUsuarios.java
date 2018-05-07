@@ -29,6 +29,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     Usuario objUsu = new Usuario();
     DaoUsuario objDao = new DaoUsuario();
     DaoRol objDaoRol = new DaoRol();
+    
     List<Rol> listComboRol;
     public FrmInternoUsuarios() {
         initComponents();
@@ -56,6 +57,9 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     }
     
     public void insertar() throws Exception{
+        
+        
+        
         recuperarDatos();
         objDao.insertarUsuario(objUsu);
     }
