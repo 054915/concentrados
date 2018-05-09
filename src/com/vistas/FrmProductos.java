@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utilidades.FuncionesValidacion;
 
 /**
  *
@@ -34,6 +35,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     List<Categoria> listComboCate;
     List<Proveedor> listComboProv;
     int txtIdProductos=0;
+    private FuncionesValidacion validar = new FuncionesValidacion();
     
     public FrmProductos() {
         initComponents();
@@ -83,8 +85,8 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                 obj[2]=objPro.getNombre();
                 obj[3]=objPro.getDescripcion();
                 obj[4]=objPro.getPrecio();
-                obj[5]=objPro.getCategoria().getNombre();
-                obj[6]=objPro.getProveedor().getNombre();
+                obj[5]=objPro.getCategoria().getIdCategoria()+", "+objPro.getCategoria().getNombre();
+                obj[6]=objPro.getProveedor().getIdProveedor()+", "+objPro.getProveedor().getNombre();
                 tabla.addRow(obj);
             }
             this.tblProductos.setModel(tabla);
@@ -98,6 +100,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         /*procedimiento*/
         fila = this.tblProductos.getSelectedRow();
         this.txtIdProductos=Integer.parseInt(String.valueOf(this.tblProductos.getValueAt(fila, 0)));
+        System.out.println(txtIdProductos);
         this.txtCodProducto.setText(String.valueOf(this.tblProductos.getValueAt(fila, 1)));
         this.txtNombre.setText(String.valueOf(this.tblProductos.getValueAt(fila, 2)));
         this.txtDescripcion.setText(String.valueOf(this.tblProductos.getValueAt(fila, 3)));
@@ -117,11 +120,12 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         String[] categ = cate.split(",");
         
         objCatTemp.setIdCategoria(Integer.parseInt(categ[0]));
+        System.out.println(categ[0]);
         objPro.setCategoria(objCatTemp);
         
         String prove=(String)this.cbbProveedor.getSelectedItem();
-        String[] proved = cate.split(",");
-        
+        String[] proved = prove.split(",");
+        System.out.println(proved[0]);
         objProTemp.setIdProveedor(Integer.parseInt(proved[0]));
         objPro.setProveedor(objProTemp);
     }
@@ -189,6 +193,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         cbbCategoria = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         cbbProveedor = new javax.swing.JComboBox<>();
+        btnLimpiar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -209,10 +214,27 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                 txtCodProductoActionPerformed(evt);
             }
         });
+        txtCodProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodProductoKeyTyped(evt);
+            }
+        });
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
+
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -257,6 +279,13 @@ public class FrmProductos extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Proveedor");
 
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,7 +323,8 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(147, 147, 147))
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
@@ -312,7 +342,9 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92))
                     .addGroup(layout.createSequentialGroup()
@@ -359,6 +391,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             tablaDep();
             limpiar();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error metodo boton");
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -380,10 +413,27 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void txtCodProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProductoKeyTyped
+        validar.numbersOnly(evt);
+    }//GEN-LAST:event_txtCodProductoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        validar.wordsOnly(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        validar.numbersOnly(evt);
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cbbCategoria;
     private javax.swing.JComboBox<String> cbbProveedor;

@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/vistas/FrmInventario.java</file>
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/dao/DaoInventario.java</file>
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/clases/Inventario.java</file>
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/vistas/FrmEmpleado.java</file>
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/vistas/FrmProductos.java</file>
             <file>file:/C:/Users/Dev04/Documents/NetBeansProjects/concentrados/src/com/clases/Producto.java</file>
+=======
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/conexion/Conexion.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmEmpleado.java</file>
+>>>>>>> e3915641fdbb171d422b5bf434858c9ba82f9f4f
         </group>
     </open-files>
 </project-private>
