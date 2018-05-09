@@ -40,6 +40,7 @@ public class Index extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
 
         jMenu4.setText("File");
         jMenuBar2.add(jMenu4);
@@ -132,6 +133,19 @@ public class Index extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu1);
 
+        jMenu7.setText("Inventario");
+        jMenu7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu7MouseClicked(evt);
+            }
+        });
+        jMenu7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu7ActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(jMenu7);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -195,6 +209,18 @@ public class Index extends javax.swing.JFrame {
         objFrmEmp.setVisible(true);
     }//GEN-LAST:event_jMenu1MouseClicked
 
+    private void jMenu7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu7MouseClicked
+        FrmInventario objFrmInv = new FrmInventario();
+        this.jDesktopPane1.add(objFrmInv);
+        objFrmInv.setVisible(true);
+    }//GEN-LAST:event_jMenu7MouseClicked
+
+    private void jMenu7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu7ActionPerformed
+        FrmInventario objFrmInv = new FrmInventario();
+        this.jDesktopPane1.add(objFrmInv);
+        objFrmInv.setVisible(true);
+    }//GEN-LAST:event_jMenu7ActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -239,6 +265,7 @@ public class Index extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
