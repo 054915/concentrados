@@ -5,6 +5,10 @@
         <group>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/conexion/Conexion.java</file>
             <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmEmpleado.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/utilidades/FuncionesValidacion.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/vistas/FrmProductos.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/clases/Producto.java</file>
+            <file>file:/C:/Users/DEVELOPER-4/Documents/NetBeansProjects/Final/concentrados/src/com/dao/DaoProductos.java</file>
         </group>
     </open-files>
 </project-private>
