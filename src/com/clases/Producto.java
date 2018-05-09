@@ -83,4 +83,8 @@ public class Producto {
         this.proveedor = proveedor;
     }
     
+    @Override
+    public String toString() {
+        return "Producto{" + "idProducto=" + idProducto + ", cod_producto=" + cod_producto + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio + ", categoria=" + categoria + ", proveedor=" + proveedor + '}';
+    }
 }

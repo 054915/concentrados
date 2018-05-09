@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +34,7 @@ public class DaoProductos extends Conexion{
             ps.setInt(6, objPro.getProveedor().getIdProveedor());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error dao");
         }
         finally{
             this.desconectar();
