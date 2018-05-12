@@ -77,10 +77,17 @@ public class FrmInicio extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel1.setText("Usuario:");
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel2.setText("Contraseña:");
 
+        txtPass.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        txtUser.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        btnIngresar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnIngresar.setText("Ingresar");
         btnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -88,6 +95,7 @@ public class FrmInicio extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,7 +118,7 @@ public class FrmInicio extends javax.swing.JFrame {
                         .addComponent(btnIngresar)
                         .addGap(47, 47, 47)
                         .addComponent(btnCancelar)))
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +135,7 @@ public class FrmInicio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIngresar)
                     .addComponent(btnCancelar))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         pack();

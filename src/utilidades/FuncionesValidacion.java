@@ -19,6 +19,22 @@ public class FuncionesValidacion {
         }
     }
     
+    public void decimalOnly(KeyEvent evt) {
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
+                && (caracter != '.') ) {
+            evt.consume();
+        }
+    }
+    
+    public void telOnly(KeyEvent evt) {
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9')) && (caracter != KeyEvent.VK_BACK_SPACE)
+                && (caracter != '-') ) {
+            evt.consume();
+        }
+    }
+    
     public void wordsOnly(KeyEvent evt)
     {
         if(!Character.isLetter(evt.getKeyChar()) && evt.getKeyChar() != KeyEvent.VK_SPACE)
@@ -26,4 +42,5 @@ public class FuncionesValidacion {
             evt.consume();
         }
     }
+    
 }

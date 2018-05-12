@@ -86,6 +86,11 @@ public class Proveedor {
     public void setGiro(String giro) {
         this.giro = giro;
     }
+
+    @Override
+    public String toString() {
+        return "Proveedor{" + "idProveedor=" + idProveedor + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", nit=" + nit + ", nfc=" + nfc + ", giro=" + giro + '}';
+    }
     
     
 }

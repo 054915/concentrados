@@ -31,6 +31,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     DaoRol objDaoRol = new DaoRol();
     
     List<Rol> listComboRol;
+    int idUsuario=0;
     public FrmInternoUsuarios() {
         initComponents();
         tablaDep();
@@ -40,7 +41,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             for (Object object : objDaoRol.mostrarRol()) {
                 Rol roles = (Rol) object;
                 listComboRol.add(roles);
-                model.addElement(roles.getIdRol()+" "+roles.getNombre());
+                model.addElement(roles.getIdRol()+" - "+roles.getNombre());
                 
             }
             this.cbbRol.setModel(model);
@@ -50,16 +51,14 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     }
     
     public void recuperarDatos(){
+        objUsu.setId_user(idUsuario);
         objUsu.setUser(this.txtusuario.getText());
         objUsu.setPass(this.txtcontra.getText());
         objUsu.setRol(1+this.cbbRol.getSelectedIndex());
-        System.out.println(this.cbbRol.getSelectedIndex());
+        //System.out.println(this.cbbRol.getSelectedIndex());
     }
     
     public void insertar() throws Exception{
-        
-        
-        
         recuperarDatos();
         objDao.insertarUsuario(objUsu);
     }
@@ -83,23 +82,25 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
     }
     
     public void limpiar(){
+        idUsuario=0;
         this.txtusuario.setText("");
         this.txtcontra.setText("");
-        this.cbbRol.setSelectedIndex(1);
+        this.cbbRol.setSelectedIndex(0);
     }
     
     public void tablaDep(){
-        String [] columnas = {"Usuario","Contraseña"};
-        Object[] obj = new Object[3];
+        String [] columnas = {"ID","Usuario","Contraseña","Rol"};
+        Object[] obj = new Object[4];
         DefaultTableModel tabla = new DefaultTableModel(null, columnas);
         List ls;
         try {
             ls=objDao.mostrarUsuario();
             for (int i = 0; i < ls.size(); i++) {
                 objUsu = (Usuario)ls.get(i);
-                obj[0]=objUsu.getUser();
-                obj[1]=objUsu.getPass();
-                obj[2]=objUsu.getObjRol().getNombre();
+                obj[0]=objUsu.getId_user();
+                obj[1]=objUsu.getUser();
+                obj[2]=objUsu.getPass();
+                obj[3]=objUsu.getObjRol().getNombre();
                 tabla.addRow(obj);
                 
             }
@@ -114,8 +115,9 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
         
         /*procedimiento*/
         fila = this.tblUsuarios.getSelectedRow();
-        this.txtusuario.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 0)));
-        this.txtcontra.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 1)));
+        idUsuario=Integer.parseInt(String.valueOf(this.tblUsuarios.getValueAt(fila, 0)));
+        this.txtusuario.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 1)));
+        this.txtcontra.setText(String.valueOf(this.tblUsuarios.getValueAt(fila, 2)));
         this.cbbRol.setSelectedItem("Empleado");
     }
     /**
@@ -138,21 +140,31 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Formulario Usuario");
+        setTitle("FORMULARIO USUARIOS");
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel1.setText("Usuario:");
 
+        txtusuario.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel2.setText("Contraseña:");
 
+        txtcontra.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel3.setText("Rol:");
 
+        cbbRol.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         cbbRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        tblUsuarios.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -171,6 +183,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblUsuarios);
 
+        btnAgregar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +191,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +199,7 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,15 +207,25 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
@@ -212,20 +237,21 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtcontra, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtcontra)
+                                    .addComponent(cbbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -244,10 +270,12 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)))
-                .addGap(43, 43, 43)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar)))
+                .addGap(53, 53, 53)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -284,10 +312,15 @@ public class FrmInternoUsuarios extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JComboBox<String> cbbRol;
     private javax.swing.JLabel jLabel1;

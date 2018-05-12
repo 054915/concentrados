@@ -50,7 +50,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             for (Object object : objDaoCat.mostrarCategoria()) {
                 Categoria cate = (Categoria) object;
                 listComboCate.add(cate);
-                model.addElement(cate.getIdCategoria()+", "+cate.getNombre());
+                model.addElement(cate.getIdCategoria()+"- "+cate.getNombre());
             }
             this.cbbCategoria.setModel(model);
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             for (Object object : objDaoProv.mostrarProveedor()) {
                 Proveedor prov = (Proveedor) object;
                 listComboProv.add(prov);
-                modelProveedor.addElement(prov.getIdProveedor()+", "+prov.getNombre());
+                modelProveedor.addElement(prov.getIdProveedor()+"- "+prov.getNombre());
             }
             this.cbbProveedor.setModel(modelProveedor);
         } catch (Exception e) {
@@ -85,8 +85,8 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                 obj[2]=objPro.getNombre();
                 obj[3]=objPro.getDescripcion();
                 obj[4]=objPro.getPrecio();
-                obj[5]=objPro.getCategoria().getIdCategoria()+", "+objPro.getCategoria().getNombre();
-                obj[6]=objPro.getProveedor().getIdProveedor()+", "+objPro.getProveedor().getNombre();
+                obj[5]=objPro.getCategoria().getIdCategoria()+"- "+objPro.getCategoria().getNombre();
+                obj[6]=objPro.getProveedor().getIdProveedor()+"- "+objPro.getProveedor().getNombre();
                 tabla.addRow(obj);
             }
             this.tblProductos.setModel(tabla);
@@ -117,14 +117,14 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         objPro.setPrecio(Double.parseDouble(this.txtPrecio.getText()));
         
         String cate=(String)this.cbbCategoria.getSelectedItem();
-        String[] categ = cate.split(",");
-        
+        String[] categ = cate.split("-");
+
         objCatTemp.setIdCategoria(Integer.parseInt(categ[0]));
         System.out.println(categ[0]);
         objPro.setCategoria(objCatTemp);
         
         String prove=(String)this.cbbProveedor.getSelectedItem();
-        String[] proved = prove.split(",");
+        String[] proved = prove.split("-");
         System.out.println(proved[0]);
         objProTemp.setIdProveedor(Integer.parseInt(proved[0]));
         objPro.setProveedor(objProTemp);
@@ -201,14 +201,19 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("FORMULARIO DE PRODUCTOS");
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel1.setText("Codigo Producto:");
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel2.setText("Nombre:");
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel3.setText("Descripcion:");
 
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel4.setText("Precio:");
 
+        txtCodProducto.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         txtCodProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodProductoActionPerformed(evt);
@@ -220,6 +225,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreKeyTyped(evt);
@@ -227,15 +233,18 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         });
 
         txtDescripcion.setColumns(20);
+        txtDescripcion.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         txtDescripcion.setRows(5);
         jScrollPane1.setViewportView(txtDescripcion);
 
+        txtPrecio.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPrecioKeyTyped(evt);
             }
         });
 
+        btnAgregar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,6 +252,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,6 +260,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +268,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             }
         });
 
+        tblProductos.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -275,10 +287,17 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         });
         jScrollPane3.setViewportView(tblProductos);
 
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel5.setText("Categoria");
 
+        cbbCategoria.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel6.setText("Proveedor");
 
+        cbbProveedor.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        btnLimpiar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,18 +312,6 @@ public class FrmProductos extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombre)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -315,10 +322,22 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(cbbProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)))
+                            .addComponent(jLabel1))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCodProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(82, 82, 82)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -344,7 +363,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
                         .addComponent(btnEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(btnLimpiar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(92, 92, 92))
                     .addGroup(layout.createSequentialGroup()
@@ -388,11 +407,11 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
             insertar();
-            tablaDep();
-            limpiar();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error metodo boton");
+            JOptionPane.showMessageDialog(null, "Error metodo boton"+e.toString());
         }
+        tablaDep();
+        limpiar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -426,7 +445,7 @@ public class FrmProductos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
-        validar.numbersOnly(evt);
+        validar.decimalOnly(evt);
     }//GEN-LAST:event_txtPrecioKeyTyped
 
 

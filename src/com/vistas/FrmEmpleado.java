@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import utilidades.FuncionesValidacion;
 
 /**
  *
@@ -25,6 +26,8 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     /**
      * Creates new form FrmEmpleado
      */
+    FuncionesValidacion validar = new FuncionesValidacion();
+    
     public FrmEmpleado() {
         initComponents();
         tablaEmpleado();
@@ -39,7 +42,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             for (Object object : daoU.mostrarUsuario()) {
                 Usuario user = (Usuario) object;
                 listUsuarios.add(user);
-                model.addElement(user.getId_user()+", "+user.getUser());
+                model.addElement(user.getId_user()+"- "+user.getUser());
                 
             }
             this.idUsuario.setModel(model);
@@ -71,7 +74,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                 obj[3] = emp.getApellidoEmpleado();
                 obj[4] = emp.getDireccionEmpleado();
                 obj[5] = emp.getTelefonoEmpleado();
-                obj[6] = emp.getUsuario().getId_user();     
+                obj[6] = emp.getUsuario().getId_user()+"- "+emp.getUsuario().getUser();     
                 objTabla.addRow(obj);
             }
             this.jTable1.setModel(objTabla);
@@ -89,15 +92,18 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         this.txtApellido.setText(String.valueOf(this.jTable1.getValueAt(filas, 3)));
         this.txtDirec.setText(String.valueOf(this.jTable1.getValueAt(filas, 4)));
         this.txtTel.setText(String.valueOf(this.jTable1.getValueAt(filas, 5)));
+        this.idUsuario.setSelectedItem(this.jTable1.getValueAt(filas, 6));
         
     }
     
     public void limpiarDatoEmp(){
+        id_empleado=0;
         txtCodigoEmpleado.setText("");
         txtNombre.setText("");
         txtApellido.setText("");
         txtDirec.setText("");
-        txtTel.setText("");  
+        txtTel.setText(""); 
+        idUsuario.setSelectedIndex(0);
     }
     
     
@@ -110,7 +116,11 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         emp.setApellidoEmpleado(this.txtApellido.getText());
         emp.setDireccionEmpleado(this.txtDirec.getText());
         emp.setTelefonoEmpleado(this.txtTel.getText());
-        p.setId_user(1+this.idUsuario.getSelectedIndex());
+        
+        String usua=(String)this.idUsuario.getSelectedItem();
+        String[] usuar = usua.split("-");
+        p.setId_user(Integer.parseInt(usuar[0]));
+        
         emp.setUsuario(p);
         try {
             daoEmp.insertarEmpleado(emp);
@@ -131,7 +141,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         emp.setDireccionEmpleado(this.txtDirec.getText());
         emp.setTelefonoEmpleado(this.txtTel.getText());
         String id_user = (String) this.idUsuario.getSelectedItem();
-        String[] id_users = id_user.split(",");
+        String[] id_users = id_user.split("-");
         u.setId_user(Integer.parseInt(id_users[0]));
         emp.setUsuario(u);
         
@@ -175,7 +185,6 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         txtApellido = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDirec = new javax.swing.JTextArea();
-        txtTel = new javax.swing.JTextField();
         idUsuario = new javax.swing.JComboBox<>();
         btnInsertar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -183,6 +192,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         btnCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        txtTel = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
@@ -190,22 +200,53 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("FORMULARIO EMPLEADOS");
 
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel1.setText("Nombre:");
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel2.setText("Apellido:");
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel3.setText("Codigo Empleado:");
 
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel4.setText("Direccion:");
 
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel5.setText("Telefono:");
 
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel6.setText("Id usuario:");
 
+        txtCodigoEmpleado.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        txtCodigoEmpleado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoEmpleadoKeyTyped(evt);
+            }
+        });
+
+        txtNombre.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtApellido.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
+
         txtDirec.setColumns(20);
+        txtDirec.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         txtDirec.setRows(5);
         jScrollPane1.setViewportView(txtDirec);
 
+        idUsuario.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+
+        btnInsertar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnInsertar.setText("Insertar");
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +254,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,6 +262,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,13 +270,15 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        btnCancelar.setText("Limpiar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
+        jTable1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -252,6 +297,17 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
+        try {
+            txtTel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtTel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -268,25 +324,25 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(btnModificar)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnEliminar)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNombre)
                             .addComponent(txtCodigoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellido)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                            .addComponent(txtTel)
-                            .addComponent(idUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(btnModificar)
-                        .addGap(41, 41, 41)
-                        .addComponent(btnEliminar)
-                        .addGap(47, 47, 47)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(74, Short.MAX_VALUE))
+                            .addComponent(idUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(83, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -311,7 +367,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -319,13 +375,13 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(idUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsertar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnCancelar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -362,6 +418,22 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         limpiarDatoEmp();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtCodigoEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoEmpleadoKeyTyped
+        validar.numbersOnly(evt);
+    }//GEN-LAST:event_txtCodigoEmpleadoKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        validar.wordsOnly(evt);
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        validar.wordsOnly(evt);
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void txtTelKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelKeyTyped
+        validar.numbersOnly(evt);
+    }//GEN-LAST:event_txtTelKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -382,6 +454,6 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigoEmpleado;
     private javax.swing.JTextArea txtDirec;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTel;
+    private javax.swing.JFormattedTextField txtTel;
     // End of variables declaration//GEN-END:variables
 }

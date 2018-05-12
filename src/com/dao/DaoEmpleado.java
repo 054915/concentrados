@@ -78,7 +78,7 @@ public class DaoEmpleado extends Conexion{
         ResultSet rs;
         try {
             this.conectar();
-            String sql ="select * from empleado";
+            String sql ="select emp.id_empleado, emp.cod_empleado, emp.nombre, emp.apellido, emp.direccion, emp.telefono, emp.id_usuario, usu.usuario from empleado emp, usuario usu WHERE emp.id_usuario=usu.id_usuario";
             PreparedStatement ps = this.getCon().prepareCall(sql);
             rs = ps.executeQuery();
             
@@ -93,6 +93,7 @@ public class DaoEmpleado extends Conexion{
                 e.setDireccionEmpleado(rs.getString("direccion"));
                 e.setTelefonoEmpleado(rs.getString("telefono"));
                 u.setId_user(rs.getInt("id_usuario"));
+                u.setUser(rs.getString("usuario"));
                 e.setUsuario(u);
                 listEmp.add(e);                
             }

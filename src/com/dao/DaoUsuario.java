@@ -40,15 +40,15 @@ public class DaoUsuario extends Conexion{
     public void modificarUsario(Usuario objUs) throws Exception{
         try {
             this.conectar();
-            String sql="update usuario set usuario=?, contrasenia=?, id_rol=? where usuario=?";
+            String sql="update usuario set usuario=?, contrasenia=?, id_rol=? where id_usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
             ps.setString(1, objUs.getUser());
             ps.setString(2, objUs.getPass());
             ps.setInt(3, objUs.getRol());
-            ps.setString(4, objUs.getUser());
+            ps.setInt(4, objUs.getId_user());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error dao"+e.toString());
         }
         finally{
             this.desconectar();
@@ -58,9 +58,9 @@ public class DaoUsuario extends Conexion{
     public void eliminarUsuario(Usuario objUs) throws Exception{
         try {
             this.conectar();
-            String sql="delete from usuario where usuario=?";
+            String sql="delete from usuario where id_usuario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setString(1, objUs.getUser());
+            ps.setInt(1, objUs.getId_user());
             ps.executeUpdate();
         } catch (Exception e) {
             throw e;

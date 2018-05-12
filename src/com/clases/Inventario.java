@@ -46,6 +46,10 @@ public class Inventario {
     public void setCantidadStock(int cantidadStock) {
         this.cantidadStock = cantidadStock;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Inventario{" + "idInventario=" + idInventario + ", producto=" + producto + ", cantidadStock=" + cantidadStock + '}';
+    }
     
 }

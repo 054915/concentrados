@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,11 +25,11 @@ public class DaoInventario extends Conexion{
             this.conectar();
             String sql="INSERT INTO inventario VALUES (NULL,?,?);";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setInt(1, objInv.getProducto().getCod_producto());
+            ps.setInt(1, objInv.getProducto().getIdProducto());
             ps.setInt(2, objInv.getCantidadStock());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error al dao "+e.toString());
         }
         finally{
             this.desconectar();
@@ -40,12 +41,12 @@ public class DaoInventario extends Conexion{
             this.conectar();
             String sql="UPDATE inventario SET id_producto=?, cantidad_stock=? WHERE id_inventario=?";
             PreparedStatement ps = this.getCon().prepareStatement(sql);
-            ps.setInt(1, objInv.getProducto().getCod_producto());
+            ps.setInt(1, objInv.getProducto().getIdProducto());
             ps.setInt(2, objInv.getCantidadStock());
             ps.setInt(3, objInv.getIdInventario());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error al dao "+e.toString());
         }
         finally{
             this.desconectar();
@@ -60,7 +61,7 @@ public class DaoInventario extends Conexion{
             ps.setInt(1, objInv.getIdInventario());
             ps.executeUpdate();
         } catch (Exception e) {
-            throw e;
+            JOptionPane.showMessageDialog(null, "Error al dao "+e.toString());
         }
         finally{
             this.desconectar();
